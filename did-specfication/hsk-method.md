@@ -109,8 +109,6 @@ function reslove(did);
 }
 ```
 
-
-
 ### Update (Replace)
 
 To update a hsk DID document, the corresponding `DID Controller` just need to invoke relevant functions.
@@ -139,7 +137,7 @@ To delete (or deactivate) a hsk DID, it suffices to remove all the verification 
 The interface method for deactivating a hsk DID document is defined as follows:
 
 ```json
-function revoke(did, sig) authenticate(did, sig);
+function revoke(did,sig) authenticate(did, sig);
 ```
 
 #### DID Document Example
