@@ -1,0 +1,8 @@
+{
+    "name": "hsk",
+    "status": "registered",
+    "verifiableDataRegistry": "Platon",
+    "contactName": "Herro",
+    "contactEmail": "panghudidi@gmail.com",
+    "specification": "https://github.com/fairxio/protocol/tree/main/did"
+  }
