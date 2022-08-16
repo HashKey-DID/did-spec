@@ -1,8 +1,8 @@
 {
     "name": "hsk",
     "status": "registered",
-    "verifiableDataRegistry": "Platon",
+    "verifiableDataRegistry": "Platon Blockchain",
     "contactName": "Herro",
     "contactEmail": "panghudidi@gmail.com",
-    "specification": "https://github.com/fairxio/protocol/tree/main/did"
+    "specification": "https://github.com/HashKey-DID/did-spec/blob/master/did-specification/hsk-method.md"
   }
