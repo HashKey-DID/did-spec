@@ -1,8 +1,8 @@
 ## HSK DID Method Specification
 
-This document defines the the HSK DID Method that conforms to the [DID Core W3C Spec](https://www.w3.org/TR/did-core), HSK is a DID method that is implemented natively on Platon blockchain. It uses the DIDDocument contract that stores the information which makes up the DID document for the HSK DID. 
+This document defines the HSK DID Method that conforms to the [DID Core W3C Spec](https://www.w3.org/TR/did-core), HSK is a DID method that is implemented on Platon blockchain. It uses the DIDDocument contract that stores the information which makes up the DID document for the HSK DID. 
 
-All of the DID Document information is anchored into a blockchain. 
+All of the DID Document information is anchored into Platon blockchain. 
 
 ## DID Method Name
 
@@ -12,15 +12,19 @@ The HSK DID method is identified by the `hsk` scheme.  A HSK identifier is a sim
 - Identifier for the DID method (hsk)
 - DID method-specific identifier
 
+examples of valid `hsk` DID:
+
  ```txt
 did:hsk:a060c1c3807059027ca141efb63f19e12e0cbf0c
  ```
 
 A DID that uses this method MUST begin with the following prefix: did:hsk. Per the DID specification, this string MUST be in lowercase. The remainder of the DID, after the prefix, is specified below.
 
+
+
 ## Method Specific Identifier
 
-The method specific identifier is represented as  the corresponding HEX-encoded Platon address on the target network.
+The method specific identifier is represented as  the corresponding HEX-encoded Platon address on the Platon network.
 
 ```shell
 hsk-did = "did:hsk:"hsk-specific-identifier
@@ -30,15 +34,10 @@ platon-address = 40*HEXDIG
 
 ## CRUD Operation Definitions
 
-A DID document can only be updated or deactivated by one of its controllers. The `controller` field MAY list the controllers of a document. The default `controller` is the DID subject itself if no controller was set when invoking `create` function. All of the writing operation MUST be authenticated,.
+A DID document can only be updated or deactivated by one of its controllers. The `controller` field MAY list the controllers of a document. The default `controller` is the DID subject itself if no controller was provided when invoking `create` function. All of the writing operation MUST be authenticated by the following `authenticate` modifier.
 
 ```solidity
-modifier authenticate(did, signature);
-```
-
-```solidity
-function addController(did, controller, controllerPublicKey, sig) authenticate(did, sig);
-function deleteController(did, controller, sig) authenticate(did, sig);
+modifier authenticate(did,signature);
 ```
 
 ### Create (register)
@@ -49,7 +48,7 @@ In order to create a `hsk` DID, Identifier Controller should generate Ecdsa Secp
 function create(publicKey,controller,controllerPublicKey);
 ```
 
-The DID  for  `did:hsk:<Ethereum address>` , e.g. `did:hsk:a060c1c3807059027ca141efb63f19e12e0cbf0c`
+The DID  for  `did:hsk:<Platon address>` , e.g. `did:hsk:a060c1c3807059027ca141efb63f19e12e0cbf0c`
 
 ####DID document Example:
 
@@ -68,7 +67,7 @@ The DID  for  `did:hsk:<Ethereum address>` , e.g. `did:hsk:a060c1c3807059027ca14
 
 ### Read (Resolve)
 
-hsk DID's associated DID document can be looked up by invoking the `resolve` method of the registry.
+HSK DID's associated DID document can be looked up by invoking the `resolve` method of the registry.
 
 To ensure the smart contract invocation result is trustworthy, the client could query a certain number of nodes and then compare the return values or deploy its own node.
 
@@ -111,33 +110,33 @@ function reslove(did);
 
 ### Update (Replace)
 
-To update a hsk DID document, the corresponding `DID Controller` just need to invoke relevant functions.
+To update a HSK DID document, the corresponding DID`Controller` just need to invoke relevant functions.
 
 For instance, the  `DID controller` can invoke the `addAuthentication` method to add a authentication relationship which has the authorization to insert a new verification method into the `authentication` property of the DID Document.
 
-The interface method for updating Document is defined as follows (The operation will only be performed if the requestor is authorized to perform that operation):
+The interface method for updating Document is defined as follows (The operation will only be performed only if the requestor is authorized to perform that operation):
 
 ```solidity
-function addContext(did, ctx, sig) authenticate(did, sig);
-function deleteContext(did, ctx, sig) authenticate(did, sig);
-function addAuthentication(did, auth, sig) authenticate(did, sig);
-function deleteAuthentication(did, auth, sig) authenticate(did, sig);
-function operateVerificationMethod( did, vmId, vmType, controller, pkKey, pkValue) authenticate(did, sig);
-function deleteVerificationMethod(did,vmId, sig) authenticate(did, sig);
-function addAssertion(did, auth) authenticate(did, sig);
-function deleteAssertion(did, auth,sig) authenticate(did, sig);
-function addController(did, controller,controllerPublicKey,sig) authenticate(did, sig);
-function deleteController(did,controller,sig) authenticate(did, sig);
+function addContext(did,ctx,sig) authenticate(did,sig);
+function deleteContext(did,ctx,sig) authenticate(did,sig);
+function addAuthentication(did,auth,sig) authenticate(did,sig);
+function deleteAuthentication(did,auth,sig) authenticate(did,sig);
+function operateVerificationMethod(did,vmId,vmType,controller,pkKey,pkValue) authenticate(did,sig);
+function deleteVerificationMethod(did,vmId,sig) authenticate(did,sig);
+function addAssertion(did,auth) authenticate(did,sig);
+function deleteAssertion(did,auth,sig) authenticate(did,sig);
+function addController(did,controller, controllerPublicKey,sig) authenticate(did,sig);
+function deleteController(did,controller,sig) authenticate(did,sig);
 ```
 
 ### Delete (Revoke)
 
-To delete (or deactivate) a hsk DID, it suffices to remove all the verification methods from its associated DID document and set a flag in the registry to indicate the DID is deactivated. In this case, there is no authentication method that can be used to authenticate the holder's identity.
+To delete (or deactivate) a HSK DID, it suffices to remove all the verification method relationships and verification methods from its associated DID document and set a flag in the registry to indicate the DID is deactivated. In this case, there is no authentication method that can be used to authenticate the holder's identity.
 
 The interface method for deactivating a hsk DID document is defined as follows:
 
-```json
-function revoke(did,sig) authenticate(did, sig);
+```solidity
+function revoke(did,sig) authenticate(did,sig);
 ```
 
 #### DID Document Example
