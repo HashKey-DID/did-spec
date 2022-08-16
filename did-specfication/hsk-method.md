@@ -105,9 +105,11 @@ function reslove(did);
     "authentication":[
         "did:hsk:a060c1c3807059027ca141efb63f19e12e0cbf0c#controller"
     ],
-  	"assertion":["did:hsk:a060c1c3807059027ca141efb63f19e12e0cbf0c#controller"],
+    "assertion":["did:hsk:a060c1c3807059027ca141efb63f19e12e0cbf0c#controller"],
 }
 ```
+
+
 
 ### Update (Replace)
 
@@ -137,7 +139,7 @@ To delete (or deactivate) a hsk DID, it suffices to remove all the verification 
 The interface method for deactivating a hsk DID document is defined as follows:
 
 ```json
-function revoke(string memory did, bytes memory sig) authenticate(did, sig);
+function revoke(did, sig) authenticate(did, sig);
 ```
 
 #### DID Document Example
