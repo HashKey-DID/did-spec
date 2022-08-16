@@ -4,7 +4,7 @@ This document defines the the HSK DID Method that conforms to the [DID Core W3C 
 
 All of the DID Document information is anchored into a blockchain. 
 
-##DID Method Name
+## DID Method Name
 
 The HSK DID method is identified by the `hsk` scheme.  A HSK identifier is a simple text string consisting of three parts:
 
@@ -33,7 +33,7 @@ platon-address = 40*HEXDIG
 A DID document can only be updated or deactivated by one of its controllers. The `controller` field MAY list the controllers of a document. The default `controller` is the DID subject itself if no controller was set when invoking `create` function. All of the writing operation MUST be authenticated,.
 
 ```solidity
-modifier authenticate(memory did, signature);
+modifier authenticate(did, signature);
 ```
 
 ```solidity
@@ -41,7 +41,7 @@ function addController(did, controller, controllerPublicKey, sig) authenticate(d
 function deleteController(did, controller, sig) authenticate(did, sig);
 ```
 
-###Create (register)
+### Create (register)
 
 In order to create a `hsk` DID, Identifier Controller should generate Ecdsa Secp256k1 keys,  At this point, no interaction with the target Platon network is required. Invoking `create` function with pramater publicKey, controller, controllerPublicKey, you will get a hsk did, if the controller, controllerPublicKey pramater is null, the default `controller` is the DID subject itself.
 
@@ -62,7 +62,7 @@ The DID  for  `did:hsk:<Ethereum address>` , e.g. `did:hsk:a060c1c3807059027ca14
     "controller":["did:hsk:a060c1c3807059027ca141efb63f19e12e0cbf0c"],
     "verificationMethod":[],
     "authentication":[],
-  	"assertion":[],
+		"assertion":[],
 }
 ```
 
