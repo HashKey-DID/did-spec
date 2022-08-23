@@ -1,0 +1,29 @@
+{
+  "name": "did-spec",
+  "version": "1.0.0",
+  "description": "did-spec",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HashKey-DID/did-spec.git"
+  },
+  "author": "herro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HashKey-DID/did-spec/issues"
+  },
+  "homepage": "https://github.com/HashKey-DID/did-spec#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/contracts-upgradeable": "^4.6.0",
+    "hardhat": "^2.10.2",
+    "hardhat-deploy": "^0.11.12"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1"
+  }
+}
