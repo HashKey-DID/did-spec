@@ -6,7 +6,7 @@ const {deploy} = deployments;
 const {deployer} = await getNamedAccounts();
 console.log(`>>> your address ${deployer}`);
 
-await deploy('DIDDocument', {
+await deploy('Document', {
     from: deployer,
     args: [],
     log: true,
@@ -14,4 +14,4 @@ await deploy('DIDDocument', {
 });
 };
 
-module.exports.tags = ["DIDDocument"];
+module.exports.tags = ["Document"];
