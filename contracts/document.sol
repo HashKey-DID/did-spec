@@ -72,23 +72,11 @@ contract Document is DocumentDatabase {
         // check controller legal
         if (!checkDidFormat(controller)) {
             // controller not exist
-            // vmId = bytes.concat(didBytes, bytes("#controller"));
-            // vmPK = bytes.concat(bytes("z"), Base58.encode(publicKey));
             _addController(did, did);
-            // controllers[did] = did;
-            // did2ControllerPK[did] = publicKey;
-            // operateVerificationMethod(did, vmId, vmType, didBytes, bytes("publicKeyMultibase"), vmPK);
         } else {
             // controller exist
-            // vmId = bytes.concat(bytes(controller), bytes("#controller"));
-            // vmPK = bytes.concat(bytes("z"), Base58.encode(controllerPublicKey));
             _addController(did, controller);
-            // controllers[did] = controller;
-            // did2ControllerPK[did] = controllerPublicKey;
-            // operateVerificationMethod(did, vmId, vmType, bytes(controller), bytes("publicKeyMultibase"), vmPK);
         }
-        // add authentication
-        // addAuthentication(did, vmId);
         didExist[did] = true;
         emit DIDCreateDID(did, controllers[keccak256(didBytes)]);
     }
@@ -96,9 +84,9 @@ contract Document is DocumentDatabase {
     /// @dev Did add context
     /// @param did did identity
     /// @param ctx doucment context
-    function _addContext(string memory did, bytes memory ctx) internal returns (bool, string memory){
+    function _addContext(string memory did, bytes memory ctx) internal returns (bool, string memory) {
         bytes32 ctxHash = keccak256(ctx);
-        if (contextSet[did].contains(ctxHash)){
+        if (contextSet[did].contains(ctxHash)) {
             return (false, "context alredy exist");
         }
         contextSet[did].add(ctxHash);
@@ -135,7 +123,7 @@ contract Document is DocumentDatabase {
         bytes memory ctBytes = bytes("[");
         // 
         EnumerableSetUpgradeable.Bytes32Set storage _contextSet = contextSet[did];
-        for (uint256 i=0; i<_contextSet.length(); i++){
+        for (uint256 i=0; i<_contextSet.length(); i++) {
            ctBytes = bytes.concat(ctBytes, bytes('\"'), contexts[_contextSet.at(i)] , bytes('\",'));
         }
         ctBytes[ctBytes.length-1] = bytes1("]");
@@ -202,11 +190,11 @@ contract Document is DocumentDatabase {
         bytes32 VMIdHash = keccak256(bytes(VMId));
 
         // authenticationSet doesn't contain VMId
-        if (authenticationSet[did].contains(VMIdHash)){
+        if (authenticationSet[did].contains(VMIdHash)) {
             return (false, "VMId alredy exist in authentication");
         }
         // VerificationMethod id must exist
-        if (!verificationMethodIds[did].contains(VMIdHash)){
+        if (!verificationMethodIds[did].contains(VMIdHash)) {
             return (false, "VMId not exist in VerificationMethod");
         }
         authenticationSet[did].add(VMIdHash);
@@ -219,7 +207,7 @@ contract Document is DocumentDatabase {
     /// @param did did identity
     /// @param VMId verification method id
     /// @param sig use Ecdsa secp256k1 private key sign sha256(did)
-    function addAuthentication(string memory did, string memory VMId, bytes memory sig) public authenticate(did, sig){
+    function addAuthentication(string memory did, string memory VMId, bytes memory sig) public authenticate(did, sig) {
         bool result;
         string memory resultMsg;
         (result, resultMsg) = _addAuthentication(did, bytes(VMId));
@@ -247,7 +235,7 @@ contract Document is DocumentDatabase {
         }
         // authentication Set is not empty
         bytes memory authBytes = bytes("[");
-        for (uint256 i=0; i<_authenticationSet.length(); i++){
+        for (uint256 i=0; i<_authenticationSet.length(); i++) {
            authBytes = bytes.concat(authBytes, bytes('\"'), authentications[_authenticationSet.at(i)] , bytes('\",'));
         }
         authBytes[authBytes.length-1] = bytes1("]");
@@ -297,7 +285,7 @@ contract Document is DocumentDatabase {
         }
 
         bytes memory assertBytes = bytes("[");
-        for (uint256 i=0; i<_assertionSet.length(); i++){
+        for (uint256 i=0; i<_assertionSet.length(); i++) {
            assertBytes = bytes.concat(assertBytes, bytes('\"'), assertions[_assertionSet.at(i)] , bytes('\",'));
         }
         assertBytes[assertBytes.length-1] = bytes1("]");
@@ -375,7 +363,7 @@ contract Document is DocumentDatabase {
             return '[]';
         }
         bytes memory verificationBytes = bytes("[");
-        for(uint i=0; i < _verificationMethodIds.length(); i++){
+        for(uint i=0; i < _verificationMethodIds.length(); i++) {
             bytes memory pk = verificationMethods[did][_verificationMethodIds.at(i)];
             verificationBytes = bytes.concat(verificationBytes, pk, bytes(','));
         }
