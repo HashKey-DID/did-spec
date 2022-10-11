@@ -151,8 +151,17 @@ function revoke(did,sig) authenticate(did,sig);
 
 ## Security Considerations
 
-The DID document contract is deployed on the PlatOn BlockChain, all of the operations MUST be signed by the private key which corresponds to the public key in the DID. This makes it impossible to insert, modificate or delete message by attacker. Document was protected by blockchain ledger security mechanism, so replay, eavesdropping, denial of service, man-in-the-middle attack are no way. DID documents use ECDSA signature technology to prevent tampering, which can only be modified by one of the controllers who has related private key.
+The DID document contract is deployed on the PlatOn BlockChain，all of the write operations MUST be signed by the private key which corresponds to the public key in the DID document. 
+
+Document was protected by blockchain ledger security mechanism, so replay, eavesdropping, denial of service, man-in-the-middle，message insertion，deletion，modification attack are impossible, which can only be modified by one of the controllers who has related private key.
+All of the  fields already been defined in document, user can insert incorrect implementation into document.
+
+We provide integrity protection and update authentication for all operations, which makes it impossible to insert, modify or delete message by attacker. Only controllers in document can modify document, which contain controller's public key.
 
 ## Privacy Considerations
 
-In order to protect users' privacy,  we do not support users to store personal privacy data in document. Document details published on the blockchain ledger are necessary only for authentication by other parties. Only the controllers hold the private key and it will not be known to any third party.
+All data stored in DID document are public, in order to protect users' privacy, we do not support users to store personal privacy data in document. All of the  fields already been defined in document, user can insert privacy data into document.
+
+DID document data published on the blockchain ledger are necessary only for authentication by other parties. So it doesn't matter to be surveillance, the data is public. 
+
+Only the controllers hold the private key in local area and it will not be known to any third party.
